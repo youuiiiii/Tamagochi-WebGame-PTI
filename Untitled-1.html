@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bar Game</title>
+    <style>
+      #hungerbar {
+        width: 300px;
+        height: 20px;
+        background-color: lightgray;
+      }
+      #bar {
+        width: 0%;
+        height: 100%;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Hunger Bar</h2>
+      <div id="hungerbar">
+        <div id="bar"></div>
+      </div>
+      <button onclick="increaseBar()">Feed</button>
+    </div>
+
+    <script>
+      let bar = document.getElementById("bar");
+      let progress = 0;
+      let intervalId;
+      let alertShown = false;
+
+      function increaseBar() {
+        if (progress >= 100) {
+          if (!alertShown) {
+            clearInterval(intervalId);
+            alert("Bar telah penuh!");
+            alertShown = true;
+          }
+        } else {
+          progress += 10;
+          bar.style.width = progress + "%";
+        }
+      }
+
+      function decreaseBar() {
+        if (progress <= 0) {
+          if (!alertShown) {
+            clearInterval(intervalId);
+            alert("Bar telah habis!");
+            alertShown = true;
+          }
+        } else {
+          progress -= 1;
+          bar.style.width = progress + "%";
+        }
+        if (progress <= 25 && !alertShown) {
+          alert("Bar hampir habis!");
+          alertShown = true;
+        }
+      }
+
+      intervalId = setInterval(decreaseBar, 1000);
+      setInterval(increaseBar, 5000);
+    </script>
+  </body>
+</html>
